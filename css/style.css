@@ -1,51 +1,58 @@
-/* RESET I BASICS */
+/* Configuració Base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    letter-spacing: -0.02em;
-    background-color: #ffffff;
-    color: #000;
+:root {
+    --margin: 20px;
+    --gutter: 10px;
+    --bg-color: #FFFFF; /* El color blanc de fons de la imatge */
 }
 
-/* LAYOUT: 4 COLUMNS & 21 ROWS */
+body, html {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Prohibit l'scroll */
+    background-color: var(--bg-color);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Sistema de Graella (4 columnes, 21 files) */
 .grid-container {
     display: grid;
+    height: 100vh;
+    padding: var(--margin);
+    gap: var(--gutter);
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(21, minmax(40px, auto));
-    gap: 10px; /* Gutter */
-    padding: 20px; /* Margin */
-    min-height: 100vh;
+    grid-template-rows: repeat(21, 1fr);
 }
 
-/* NAVIGATION */
-nav {
-    grid-column: 1 / 5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.logo {
-    font-weight: bold;
+/* Estils de Text basats en els teus Mixins */
+.logo-font {
     font-size: 24px;
-}
-
-.nav-links a {
-    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: -0.03em;
     color: #000;
-    margin-left: 30px;
-    font-weight: 400;
 }
 
-/* BOTONS 3D (Mixins de Figma) */
-.btn-3d {
+.normal-text {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.small-text {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+/* Botó 3D PosterForge */
+.forge-button {
     display: flex;
     width: 180px;
     height: 60px;
@@ -57,58 +64,66 @@ nav {
     color: white;
     border: none;
     cursor: pointer;
+    text-decoration: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    /* Aplicant el teu Black Button Shadow */
+    box-shadow: inset 0px 1px 0.75px rgba(255,255,255,0.070), 
+                0px 4px 4px rgba(0,0,0,0.250), 
+                0px 0px 0px 1px rgba(47,47,55,1), 
+                0px 4px 4px rgba(0,0,0,0.250), 
+                0px 47.62px 46.23px rgba(15,15,15,0.401), 
+                0px 27.25px 26.45px rgba(15,15,15,0.338), 
+                0px 16.54px 16.06px rgba(15,15,15,0.292), 
+                0px 9.97px 9.68px rgba(15,15,15,0.248);
     transition: transform 0.1s ease;
-    /* Black Button Shadow de Figma */
-    box-shadow: 0 1px 0.75px 0 rgba(255, 255, 255, 0.07) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px #2F2F37, 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 47.62px 46.233px 0 rgba(15, 15, 15, 0.40), 0 27.247px 26.453px 0 rgba(15, 15, 15, 0.34), 0 16.539px 16.057px 0 rgba(15, 15, 15, 0.29), 0 9.965px 9.675px 0 rgba(15, 15, 15, 0.25);
 }
 
-.btn-3d:active {
+.forge-button:active {
     transform: scale(0.98);
 }
 
-/* COMPTADOR */
-.counter {
+/* Estils d'imatges exactes */
+.poster-img {
+    width: 360px;
+    height: 449px;
+    object-fit: cover;
+    background-color: #ddd; /* Placeholder */
+}
+
+/* Navegació */
+nav {
+    grid-column: 3 / 5;
+    grid-row: 1;
     display: flex;
-    width: 62px;
-    height: 60px;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: #fff;
+    justify-content: space-between;
+    align-items: start;
 }
 
-.counter.green {
-    background: #00EF5A;
-    box-shadow: 0 0.847px 0.635px 0 rgba(255, 255, 255, 0.07) inset, 0 3.388px 3.388px 0 rgba(0, 248, 99, 0.25), 0 0 0 0.847px #00F863, 0 40.33px 39.155px 0 rgba(0, 248, 99, 0.40);
+nav a {
+    text-decoration: none;
+    color: black;
 }
 
-.counter.orange {
-    background: #FF4906;
-    box-shadow: inset 0px 0.92px 0.69px rgba(255,255,255,0.07), 0px 3.68px 3.68px rgba(255,73,6,0.25), 0px 0px 0px 0.92px rgba(255,73,6,1), 0px 43.82px 42.55px rgba(255,73,6,0.40);
+/* Contenidor per als 4 pòsters fixat a baix amb marge inferior 20px */
+.posters-bottom {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    z-index: 20;
+    padding: 0 10px;
 }
 
-/* DESPLEGABLES */
-.select-container {
-    margin-bottom: 20px;
+.posters-bottom .poster-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 360px;
 }
 
-select {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #eee;
-    background: #fff;
-    appearance: none;
-    cursor: pointer;
-}
-
-/* POSTER PREVIEW */
-.poster-preview {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    background: #f0f0f0;
-    border: 10px solid #000;
-    position: relative;
-    overflow: hidden;
+.posters-bottom .poster-item p {
+    text-align: left;
 }
