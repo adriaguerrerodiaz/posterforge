@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PosterForge - Gallery</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="grid-container">
+        <div style="grid-column: 1; grid-row: 1;" class="logo-font">
+            PosterForge
+        </div>
+
+        <nav class="normal-text">
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="shop.html" style="margin-left: 40px;">Shop</a>
+            <a href="login.html">Log In</a>
+        </nav>
+
+        <div style="grid-column: 1; grid-row: 4 / 8;" class="normal-text">
+        </div>
+
+        <!-- Gallery grid (filled from saved posters) -->
+        <div style="grid-column: 1 / -1; grid-row: 6 / 20; padding: 24px;">
+            <div class="poster-grid" id="gallery-grid"></div>
+        </div>
+
+    <script>
+        // Render posters from localStorage into the gallery
+        function renderGallery() {
+            const key = 'posterforge_saved';
+            const arr = JSON.parse(localStorage.getItem(key) || '[]');
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            if (!arr || arr.length === 0) {
+                grid.innerHTML = '<div class="poster-placeholder">No hi ha pòsters guardats encara.</div>';
+                return;
+            }
+            arr.slice().reverse().forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'poster-item';
+                card.innerHTML = `
+                    <div class="thumb-frame">
+                        <img src="${p.base}" class="thumb-base" onerror="this.style.display='none'">
+                        <img src="${p.top}" class="thumb-top" onerror="this.style.display='none'">
+                    </div>
+                    <p class="small-text">Generat el ${new Date(p.created).toLocaleString()}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial render and listen for storage updates
+        renderGallery();
+        window.addEventListener('storage', renderGallery);
+        window.addEventListener('posterforge:updated', renderGallery);
+    </script>
+    </div>
+
+    <script>
+        // Make site logo clickable and redirect to home
+        document.querySelectorAll('.logo-font').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => window.location.href = 'home.html');
+        });
+    </script>
+</body>
+</html>
