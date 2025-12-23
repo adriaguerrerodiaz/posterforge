@@ -2,7 +2,6 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PosterForge - Generate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,22 +9,26 @@
 <body>
 
     <div class="grid-container">
-        <div style="grid-column: 1; grid-row: 1;" class="logo-font">
-            PosterForge
+        
+        <div style="grid-column: 1; grid-row: 1;">
+            <h1 class="logo-font">PosterForge</h1>
         </div>
 
-        <nav class="normal-text">
-            <a href="about.html">About</a>
-            <a href="team.html">Team</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="shop.html" style="margin-left: 40px;">Shop</a>
-            <a href="login.html">Log In</a>
-        </nav>
+        <div style="grid-column: 3; grid-row: 1; display: flex; gap: 20px;">
+            <a href="about.html" class="normal-text" style="text-decoration: none; color: black;">About</a>
+            <a href="team.html" class="normal-text" style="text-decoration: none; color: black;">Team</a>
+            <a href="gallery.html" class="normal-text" style="text-decoration: none; color: black;">Gallery</a>
+        </div>
 
-        <div style="grid-column: 1; grid-row: 4 / 8;" class="normal-text">
-            <p>Genera pòsters únics a partir de dibuixos, il·lustracions i elements gràfics creats per artistes.</p>
+        <div style="grid-column: 4; grid-row: 1; display: flex; justify-content: space-between;">
+            <a href="shop.html" class="normal-text" style="text-decoration: none; color: black;">Shop</a>
+            <span class="normal-text" style="opacity: 0.3;">John Deere</span>
+        </div>
+
+        <div style="grid-column: 1; grid-row: 4 / 8;">
+            <p class="normal-text">Genera pòsters únics a partir de dibuixos, il·lustracions i elements gràfics creats per artistes.</p>
             <br>
-            <p>Crea la teva pròpia galeria i descarrega o imprimeix els pòsters que més t’agradin.</p>
+            <p class="normal-text">Crea la teva pròpia galeria i descarrega o imprimeix els pòsters que més t’agradin.</p>
         </div>
 
         <div style="grid-column: 3; grid-row: 4 / 13; display: flex; flex-direction: column; gap: 30px;">
@@ -65,18 +68,16 @@
 
         </div>
 
-        <div id="poster-result-container" style="grid-column: 4; grid-row: 4 / 13; display: flex; justify-content: flex-end; align-items: flex-start;">
+        <div style="grid-column: 3; grid-row: 13 / 15; display: flex; align-items: center; gap: 15px;">
+            <div class="green-counter">
+                5/5
             </div>
-
-        <div class="controls-row" style="grid-column: 3; grid-row: 15 / 17; display: flex; align-items: center; gap: 15px;">
-            <div class="green-counter">5/5</div>
-            <button class="forge-button" id="forgeBtn">Forge Your Poster</button>
+            <button class="forge-button">Forge Your Poster</button>
         </div>
 
     </div>
 
     <script>
-        // Tanca els selectors si es fa clic a fora
         window.onclick = function(event) {
             if (!event.target.closest('.custom-select-container')) {
                 document.querySelectorAll('.custom-select-container').forEach(el => {
@@ -84,37 +85,6 @@
                 });
             }
         }
-
-        // Navegació del Logo
-        document.querySelectorAll('.logo-font').forEach(function(el){
-            el.setAttribute('role','button');
-            if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex','0');
-            el.style.cursor = 'pointer';
-            el.addEventListener('click', function(){ window.location.href = 'home.html'; });
-            el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = 'home.html'; } });
-        });
-
-        // Lògica de Generació del Pòster
-        document.getElementById('forgeBtn').addEventListener('click', function() {
-            const container = document.getElementById('poster-result-container');
-            const counter = document.querySelector('.green-counter');
-            
-            // 1. Simulem la càrrega d'una imatge aleatòria (pots canviar les URLs per les teves)
-            const randomID = Math.floor(Math.random() * 1000);
-            const imageUrl = `https://picsum.photos/360/449?random=${randomID}`;
-            
-            // 2. Injectem la imatge amb la classe poster-img que ja tens al CSS
-            container.innerHTML = `<img src="${imageUrl}" class="poster-img" alt="Pòster Generat">`;
-
-            // 3. Actualitzem el comptador visualment
-            let parts = counter.innerText.split('/');
-            let current = parseInt(parts[0]);
-            if (current > 0) {
-                counter.innerText = (current - 1) + "/5";
-            } else {
-                alert("Has esgotat els teus intents!");
-            }
-        });
     </script>
 
 </body>
