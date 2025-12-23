@@ -6,13 +6,10 @@
     <title>PosterForge - Generate</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
     <div class="grid-container">
-        <div style="grid-column: 1; grid-row: 1;" class="logo-font">
-            PosterForge
-        </div>
+        <div style="grid-column: 1; grid-row: 1;" class="logo-font">PosterForge</div>
 
         <nav class="normal-text">
             <a href="about.html">About</a>
@@ -29,40 +26,30 @@
         </div>
 
         <div style="grid-column: 3; grid-row: 4 / 13; display: flex; flex-direction: column; gap: 30px;">
-            
             <div class="custom-select-container" onclick="this.classList.toggle('open')">
-                <span class="select-label">Scale</span>
-                <div class="select-trigger">
-                    <span>Select Scale</span>
-                </div>
+                <span class="select-label normal-text">Scale</span>
+                <div class="select-trigger"><span class="normal-text">Select Scale</span></div>
                 <div class="select-options">
-                    <div class="option-item">Horizontal</div>
-                    <div class="option-item" style="border-top: 1px solid #f0f0f0;">Vertical</div>
+                    <div class="option-item normal-text">Horizontal</div>
+                    <div class="option-item normal-text" style="border-top: 1px solid #f0f0f0;">Vertical</div>
                 </div>
             </div>
 
             <div class="custom-select-container" onclick="this.classList.toggle('open')">
-                <span class="select-label">Color</span>
-                <div class="select-trigger">
-                    <span>Select palette</span>
-                </div>
-                <div class="select-options">
-                    <div class="palette-preview"></div>
-                </div>
+                <span class="select-label normal-text">Color</span>
+                <div class="select-trigger"><span class="normal-text">Select palette</span></div>
+                <div class="select-options"><div class="palette-preview"></div></div>
             </div>
 
             <div class="custom-select-container" onclick="this.classList.toggle('open')">
-                <span class="select-label">Mood</span>
-                <div class="select-trigger">
-                    <span>Select moods</span>
-                </div>
+                <span class="select-label normal-text">Mood</span>
+                <div class="select-trigger"><span class="normal-text">Select moods</span></div>
                 <div class="select-options">
-                    <div class="option-item">Happy</div>
-                    <div class="option-item">Dark</div>
-                    <div class="option-item">Retro</div>
+                    <div class="option-item normal-text">Happy</div>
+                    <div class="option-item normal-text">Dark</div>
+                    <div class="option-item normal-text">Retro</div>
                 </div>
             </div>
-
         </div>
 
         <div id="poster-result-container" style="grid-column: 4; grid-row: 4 / 13; display: flex; justify-content: flex-end; align-items: flex-start;">
@@ -72,50 +59,47 @@
             <div class="green-counter">5/5</div>
             <button class="forge-button" id="forgeBtn">Forge Your Poster</button>
         </div>
-
     </div>
 
     <script>
-        // Tanca els selectors si es fa clic a fora
+        // Tanca selectors
         window.onclick = function(event) {
             if (!event.target.closest('.custom-select-container')) {
-                document.querySelectorAll('.custom-select-container').forEach(el => {
-                    el.classList.remove('open');
-                });
+                document.querySelectorAll('.custom-select-container').forEach(el => el.classList.remove('open'));
             }
         }
 
-        // Navegació del Logo
-        document.querySelectorAll('.logo-font').forEach(function(el){
-            el.setAttribute('role','button');
-            if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex','0');
+        // Logo click
+        document.querySelectorAll('.logo-font').forEach(el => {
             el.style.cursor = 'pointer';
-            el.addEventListener('click', function(){ window.location.href = 'home.html'; });
-            el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = 'home.html'; } });
+            el.onclick = () => window.location.href = 'home.html';
         });
 
-        // Lògica de Generació del Pòster
+        // Lògica de Generació Combinada
         document.getElementById('forgeBtn').addEventListener('click', function() {
             const container = document.getElementById('poster-result-container');
             const counter = document.querySelector('.green-counter');
             
-            // 1. Simulem la càrrega d'una imatge aleatòria (pots canviar les URLs per les teves)
-            const randomID = Math.floor(Math.random() * 1000);
-            const imageUrl = `https://picsum.photos/360/449?random=${randomID}`;
-            
-            // 2. Injectem la imatge amb la classe poster-img que ja tens al CSS
-            container.innerHTML = `<img src="${imageUrl}" class="poster-img" alt="Pòster Generat">`;
+            // Llistat de fitxers (haurien de coincidir amb els teus noms reals a les carpetes)
+            const llistaDibuixos = ['dibuix1.png', 'dibuix2.png', 'dibuix3.png']; 
+            const llistaGrafics = ['grafic1.png', 'grafic2.png', 'grafic3.png'];
 
-            // 3. Actualitzem el comptador visualment
+            const dibuixAleatori = llistaDibuixos[Math.floor(Math.random() * llistaDibuixos.length)];
+            const graficAleatori = llistaGrafics[Math.floor(Math.random() * llistaGrafics.length)];
+
+            // Creem el frame del pòster que contindrà les dues capes
+            container.innerHTML = `
+                <div class="poster-frame">
+                    <img src="dibuixos/${dibuixAleatori}" class="layer base-layer" alt="Dibuix">
+                    <img src="gràfics/${graficAleatori}" class="layer top-layer" alt="Gràfic">
+                </div>
+            `;
+
+            // Actualitzar comptador
             let parts = counter.innerText.split('/');
             let current = parseInt(parts[0]);
-            if (current > 0) {
-                counter.innerText = (current - 1) + "/5";
-            } else {
-                alert("Has esgotat els teus intents!");
-            }
+            if (current > 0) counter.innerText = (current - 1) + "/5";
         });
     </script>
-
 </body>
 </html>
