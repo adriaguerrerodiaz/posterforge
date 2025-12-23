@@ -1,0 +1,114 @@
+/* RESET I BASICS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    background-color: #ffffff;
+    color: #000;
+}
+
+/* LAYOUT: 4 COLUMNS & 21 ROWS */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(21, minmax(40px, auto));
+    gap: 10px; /* Gutter */
+    padding: 20px; /* Margin */
+    min-height: 100vh;
+}
+
+/* NAVIGATION */
+nav {
+    grid-column: 1 / 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    margin-left: 30px;
+    font-weight: 400;
+}
+
+/* BOTONS 3D (Mixins de Figma) */
+.btn-3d {
+    display: flex;
+    width: 180px;
+    height: 60px;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: #06091A;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    /* Black Button Shadow de Figma */
+    box-shadow: 0 1px 0.75px 0 rgba(255, 255, 255, 0.07) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px #2F2F37, 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 47.62px 46.233px 0 rgba(15, 15, 15, 0.40), 0 27.247px 26.453px 0 rgba(15, 15, 15, 0.34), 0 16.539px 16.057px 0 rgba(15, 15, 15, 0.29), 0 9.965px 9.675px 0 rgba(15, 15, 15, 0.25);
+}
+
+.btn-3d:active {
+    transform: scale(0.98);
+}
+
+/* COMPTADOR */
+.counter {
+    display: flex;
+    width: 62px;
+    height: 60px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.counter.green {
+    background: #00EF5A;
+    box-shadow: 0 0.847px 0.635px 0 rgba(255, 255, 255, 0.07) inset, 0 3.388px 3.388px 0 rgba(0, 248, 99, 0.25), 0 0 0 0.847px #00F863, 0 40.33px 39.155px 0 rgba(0, 248, 99, 0.40);
+}
+
+.counter.orange {
+    background: #FF4906;
+    box-shadow: inset 0px 0.92px 0.69px rgba(255,255,255,0.07), 0px 3.68px 3.68px rgba(255,73,6,0.25), 0px 0px 0px 0.92px rgba(255,73,6,1), 0px 43.82px 42.55px rgba(255,73,6,0.40);
+}
+
+/* DESPLEGABLES */
+.select-container {
+    margin-bottom: 20px;
+}
+
+select {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background: #fff;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* POSTER PREVIEW */
+.poster-preview {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #f0f0f0;
+    border: 10px solid #000;
+    position: relative;
+    overflow: hidden;
+}
