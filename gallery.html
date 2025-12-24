@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PosterForge - Gallery</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="grid-container">
+        <div style="grid-column: 1; grid-row: 1;" class="logo-font">
+            PosterForge
+        </div>
+
+        <nav class="normal-text">
+            <a href="about.html">About</a>
+            <a href="team.html">Team</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="shop.html" style="margin-left: 40px;">Shop</a>
+            <a href="login.html">Log In</a>
+        </nav>
+
+        <div style="grid-column: 1; grid-row: 4 / 8;" class="normal-text">
+            </div>
+
+        <div class="posters-bottom" id="gallery-grid" aria-label="Community posters">
+            </div>
+
+    <script>
+        function renderGallery() {
+            const key = 'posterforge_saved';
+            const arr = JSON.parse(localStorage.getItem(key) || '[]');
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            
+            if (!arr || arr.length === 0) {
+                grid.innerHTML = '<div class="normal-text">No hi ha pòsters guardats encara.</div>';
+                return;
+            }
+            
+            // Renderitzem els guardats amb la mateixa estructura que la Home
+            arr.slice().reverse().forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'poster-item';
+                
+                // Nota: Utilitzem la classe .poster-img per tenir els 361x449px
+                item.innerHTML = `
+                    <p class="small-text">Generat el ${new Date(p.created).toLocaleDateString()}</p>
+                    <div style="position: relative;" class="poster-img">
+                        <img src="${p.base}" style="position: absolute; width:100%; height:100%; object-fit:cover; border-radius:0;" onerror="this.style.display='none'">
+                        <img src="${p.top}" style="position: absolute; width:100%; height:100%; object-fit:cover; border-radius:0; mix-blend-mode: multiply;" onerror="this.style.display='none'">
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        renderGallery();
+        window.addEventListener('storage', renderGallery);
+        window.addEventListener('posterforge:updated', renderGallery);
+    </script>
+    </div>
+
+    <script>
+        document.querySelectorAll('.logo-font').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => window.location.href = 'home.html');
+        });
+    </script>
+</body>
+</html>

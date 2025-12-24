@@ -28,15 +28,24 @@
             <p>Coneix l’equip que forma part d’aquest projecte innovador.</p>
         </div>
 
-        <div style="grid-column: 1 / 2; grid-row: 10 / 17; display: flex; align-items: flex-end; gap: 20px;">
-            <div style="background:#EDC192; width:300px; height:400px;"></div>
-            <p style="font-size: 14px;">Adrià Guerrero<br>Il·lustrador<br>Llagostera, 2006</p>
+        <div style="grid-column: 1 / -1; grid-row: 14 / 21; display: flex; justify-content: center; align-items: flex-end; gap: 120px;">
+            <div style="display:flex; align-items:flex-end; gap:20px; justify-content:left;">
+                <img src="assets/pfps/autor1.png" alt="Adrià Guerrero" style="width:300px; height:400px; object-fit:cover; display:block;">
+                <p style="font-size: 14px; text-align:center;">Adrià Guerrero<br>Il·lustrador<br>Llagostera, 2006</p>
+            </div>
+
+            <div style="display:flex; align-items:flex-end; gap:20px; justify-content:left;">
+                <img src="assets/pfps/autor2.png" alt="Martí Gay" style="width:300px; height:400px; object-fit:cover; display:block;">
+                <p style="font-size: 14px; text-align:center;">Martí Gay<br>Dissenyador Gràfic<br>Fornells, 2006</p>
+            </div>
         </div>
 
-        <div style="grid-column: 3 / 4; grid-row: 10 / 17; display: flex; align-items: flex-end; gap: 20px;">
-            <div style="background:#F56565; width:300px; height:400px;"></div>
-            <p style="font-size: 14px;">Martí Gay<br>Dissenyador Gràfic<br>Fornells, 2006</p>
-        </div>
-    </div>
+    <script>
+        // Make site logo clickable and redirect to home
+        document.querySelectorAll('.logo-font').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => window.location.href = 'home.html');
+        });
+    </script>
 </body>
 </html>

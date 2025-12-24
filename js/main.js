@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const trigger = selector.querySelector('.select-trigger');
         trigger.addEventListener('click', function(e) {
             e.stopPropagation();
-            // Tanquem els altres abans d'obrir aquest
             selectors.forEach(s => { if(s !== selector) s.classList.remove('open'); });
             selector.classList.toggle('open');
         });
@@ -31,14 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('poster-result-container');
     const counterDisplay = document.getElementById('counter');
 
-    // CONFIGURACIÓ
     const llistaDibuixos = ['IMG_4154.JPG', 'IMG_4301.JPG']; 
     const llistaGrafics = ['W.svg', 'W&P.svg'];
-    const modesBlending = ['multiply', 'overlay', 'screen', 'difference', 'color-burn'];
+    // Hem eliminat llistaColors i modesBlending per simplificar si no es veia bé
 
     if (forgeBtn) {
         forgeBtn.addEventListener('click', function() {
-            // Comptador
             let parts = counterDisplay.innerText.split('/');
             let currentAttempts = parseInt(parts[0]);
 
@@ -47,28 +44,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Selecció aleatòria
             const randomDibuix = llistaDibuixos[Math.floor(Math.random() * llistaDibuixos.length)];
             const randomGrafic = llistaGrafics[Math.floor(Math.random() * llistaGrafics.length)];
-            const randomBlend = modesBlending[Math.floor(Math.random() * modesBlending.length)];
-            const randomColor = llistaColors[Math.floor(Math.random() * llistaColors.length)];
 
-            // Generació de l'HTML del pòster
-            // Utilitzem mask-image per aplicar el color al gràfic SVG
+            const graphicUrl = encodeURI(`gràfics/${randomGrafic}`);
+            const dibuixUrl = `dibuixos/${randomDibuix}`;
+
+            // ESTRUCTURA NETEJA: Imatge a sota, SVG a sobre al 100% de mida
             container.innerHTML = `
-                <div class="poster-frame">
-                    <img src="dibuixos/${randomDibuix}" class="layer base-layer" alt="Base">
-                    <div class="layer top-layer" 
-                         style="background-color: ${randomColor}; 
-                                mix-blend-mode: ${randomBlend}; 
-                                -webkit-mask-image: url('gràfics/${randomGrafic}'); 
-                                mask-image: url('gràfics/${randomGrafic}');">
-                    </div>
+                <div class="poster-frame" style="position:relative; width:100%; height:100%; overflow:hidden; background:#fff;">
+                    
+                    <img src="${dibuixUrl}" alt="Base" 
+                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                    
+                    <img src="${graphicUrl}" alt="Graphic" 
+                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; z-index:2; pointer-events:none;">
                 </div>
             `;
 
-            // Actualitzar comptador
             counterDisplay.innerText = (currentAttempts - 1) + "/5";
         });
     }
+});
+
+document.querySelectorAll('.logo-font').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => window.location.href = 'home.html');
 });
